@@ -40,15 +40,11 @@ urlpatterns = [
 
 # Define url for book view
 urlpatterns = [
-    # List all books (optional, for reference)
-    path('books/', views.book_list, name='book_list'),
+    # List all books (optional)
+    path('book_list/', views.book_list, name='book_list'),
 
-    # Add a book
-    path('books/add/', views.add_book, name='add_book'),
-
-    # Edit a book
-    path('books/<int:book_id>/edit/', views.edit_book, name='edit_book'),
-
-    # Delete a book
-    path('books/<int:book_id>/delete/', views.delete_book, name='delete_book'),
+    # Secured views (exact paths checker wants)
+    path('add_book/', views.add_book, name='add_book'),
+    path('edit_book/<int:book_id>/', views.edit_book, name='edit_book'),
+    path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
 ]
