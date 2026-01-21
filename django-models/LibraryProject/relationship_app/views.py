@@ -54,7 +54,6 @@ def register(request):
     return render(request, 'relationship_app/register.html', {'form': form})
 
 # Special Door
-from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 
 # --- Role checks ---
