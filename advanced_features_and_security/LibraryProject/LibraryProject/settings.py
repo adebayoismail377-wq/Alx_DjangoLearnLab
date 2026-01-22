@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
             'accounts',  
                 'posts',
-                'relationship_app'
-                'bookshelf'# <-- Add this line
+                'relationship_app',
+                'bookshelf',# <-- Add this line
 ]
 
 MIDDLEWARE = [
