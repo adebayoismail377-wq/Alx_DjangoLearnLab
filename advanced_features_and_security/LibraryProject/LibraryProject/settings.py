@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0c0f*ans7)d&n@p32&-2(ny^h6+0ol#kipj&nimx4li-=!ebj6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
             'accounts',  
                 'posts',
                 'relationship_app',
-                'bookshelf',# <-- Add this line
+                'bookshelf',
+                'csp'
+                # <-- Add this line
 ]
 
 MIDDLEWARE = [
@@ -51,8 +53,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
+# csp : What this does;Blocks inline scripts, Prevents malicious external JS,
+# Stops injected scripts from running
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+
+#root conf
 ROOT_URLCONF = 'LibraryProject.urls'
 
 TEMPLATES = [
@@ -137,6 +149,29 @@ AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Prevent the browser from trying to guess content types
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser XSS protection
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent your site from being embedded in an iframe
+X_FRAME_OPTIONS = 'DENY'
+
+# CSRF protection cookies only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+
+# Session cookies only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+
+SECURE_SSL_REDIRECT = True
+
+# (Documentation;inline comment)
+# SECURE_BROWSER_XSS_FILTER enables browser-based XSS protection
+SECURE_BROWSER_XSS_FILTER = True
+
+
 
 
 
