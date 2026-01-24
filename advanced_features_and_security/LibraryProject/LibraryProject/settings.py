@@ -165,11 +165,24 @@ CSRF_COOKIE_SECURE = True
 # Session cookies only sent over HTTPS
 SESSION_COOKIE_SECURE = True
 
+# Redirect all HTTP requests to HTTPS
 SECURE_SSL_REDIRECT = True
 
 # (Documentation;inline comment)
 # SECURE_BROWSER_XSS_FILTER enables browser-based XSS protection
 SECURE_BROWSER_XSS_FILTER = True
+
+# HTTP Strict Transport Security (HSTS)
+# Browsers will only access the site via HTTPS for 1 year (31536000 seconds)
+SECURE_HSTS_SECONDS = 31536000
+
+# Apply HSTS policy to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Allow the site to be included in browsers' HSTS preload list
+SECURE_HSTS_PRELOAD = True
+
+
 
 
 
