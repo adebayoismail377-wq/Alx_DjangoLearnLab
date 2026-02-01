@@ -11,4 +11,6 @@ class Book(models.Model):
     pages = models.IntegerField()
     def __str__(self):
         return self.title
+    
+
 
