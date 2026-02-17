@@ -4,8 +4,12 @@
 <p>{{ object.content }}</p>
 
 {% if user == object.author %}
+    <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
     <a href="{% url 'post-update' object.pk %}">Edit</a>
     <a href="{% url 'post-delete' object.pk %}">Delete</a>
+    <a href="{% url 'post-create' %}">New Post</a>
+
 {% endif %}
 
 {% endblock %}
+
