@@ -142,7 +142,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     fields = ['content']
 
     def form_valid(self, form):
-        post = Post.objects.get(id=self.kwargs['post_id'])
+        post = Post.objects.get(pk=self.kwargs['pk'])
         form.instance.post = post
         form.instance.author = self.request.user
         return super().form_valid(form)
