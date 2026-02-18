@@ -40,4 +40,9 @@
     <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
 {% endif %}
 
+<p>Tags:</p>
+{% for tag in object.tags.all %}
+    <a href="{% url 'posts-by-tag' tag.name %}">{{ tag.name }}</a>
+{% endfor %}
+
 

@@ -66,3 +66,7 @@ urlpatterns += [
         name='comment-delete'
     ),
 ]
+
+path('tags/<str:tag_name>/', views.PostByTagView.as_view(), name='posts-by-tag'),
+
+path('search/', views.SearchResultsView.as_view(), name='search'),
