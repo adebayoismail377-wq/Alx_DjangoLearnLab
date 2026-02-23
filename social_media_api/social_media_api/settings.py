@@ -40,6 +40,7 @@ INSTALLED_APPS = [
       # Third-party
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
 
     # Local apps
     'accounts',
@@ -145,6 +146,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5,
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
-    ]
+        'rest_framework.filters.SearchFilter',
+    ],
 }
 
