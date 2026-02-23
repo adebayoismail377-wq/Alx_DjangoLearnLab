@@ -7,6 +7,10 @@ from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions, status
+from .serializers import PostSerializer
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -32,9 +36,11 @@ class FeedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        # Get all posts from users the current user follows
-        posts = Post.objects.filter(author__in=user.following.all()).order_by('-created_at')
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
+        # Get the users the current user is following
+        following_users = request.user.following.all()
 
+        # Fetch posts from following users, most recent first
+        posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
+
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
