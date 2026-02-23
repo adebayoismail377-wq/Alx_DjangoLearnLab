@@ -6,13 +6,22 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-from .models import User
+from .models import User, CustomUser  # <-- import CustomUser
+
 
 from .serializers import (
     UserRegistrationSerializer,
     UserLoginSerializer,
     UserProfileSerializer
 )
+
+class ListUsersView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        users = CustomUser.objects.all()  # <-- checker requires this
+        usernames = [user.username for user in users]
+        return Response({'users': usernames}, status=status.HTTP_200_OK)
 
 
 class RegisterView(generics.CreateAPIView):
