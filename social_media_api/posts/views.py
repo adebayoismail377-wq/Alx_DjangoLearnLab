@@ -12,6 +12,8 @@ from rest_framework import permissions, status
 from .serializers import PostSerializer
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -76,3 +78,36 @@ class UnlikePostView(APIView):
             like.delete()
             return Response({'message': 'Post unliked!'}, status=status.HTTP_200_OK)
         return Response({'message': 'You have not liked this post yet.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+@login_required
+def like_post(request, pk):
+    post = generics.get_object_or_404(Post, pk=pk)
+
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        post=post
+    )
+
+    if created:
+        # Create notification only when post is liked (not unliked)
+        if post.author != request.user:
+            Notification.objects.create(
+                sender=request.user,
+                recipient=post.author,
+                notification_type='like',
+                post=post
+            )
+
+    return redirect('post-detail', pk=pk)
+
+
+@login_required
+def unlike_post(request, pk):
+    post = generics.get_object_or_404(Post, pk=pk)
+
+    Like.objects.filter(
+        user=request.user,
+        post=post
+    ).delete()
+
+    return redirect('post-detail', pk=pk)
